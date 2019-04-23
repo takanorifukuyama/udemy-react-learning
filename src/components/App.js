@@ -11,14 +11,19 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      
+      location: {
+        lat: 35.6585805,
+        lng: 139.7454329,
+      },
     }
   }
   setErrorMessage = message => {
     this.setState({
       address: message,
-      lat: 0,
-      lng: 0,
+      location: {
+        lat: 0,
+        lng: 0,
+      },
     })
   }
   
@@ -26,16 +31,13 @@ class App extends Component {
     axios.get(GEOCODE_ENDPOINT, { params: { address: place }})
     .then( results => {
       //success
-      console.log(results);
       const data = results.data
       const result = data.results[0]
       switch(data.status){
         case 'OK': {
-          const location = result.geometry.location
           this.setState({
             address: result.formatted_address,
-            lat: location.lat,
-            lng: location.lng,
+            location : result.geometry.location,
           })
           break;
         }
@@ -60,11 +62,10 @@ class App extends Component {
         <h1>緯度経度検索</h1>
         <SearchForm onSubmit={place=>this.handlePlaceSubmit(place)}/>
         <GeocodeResult
-          address={this.state.address} 
-          lat={this.state.lat}
-          lng={this.state.lng}
+          address={this.state.address}
+          location={this.state.location}
         />
-        <Map lat={this.state.lat} lng={this.state.lng} />
+        <Map location={this.state.location} />
       </div>
     );
   }
