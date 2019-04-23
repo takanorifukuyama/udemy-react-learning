@@ -12,21 +12,21 @@ const InnerMap = withGoogleMap( ({location, marker}) => (
             {...marker}
         />
     </GoogleMap>
-  ));
+));
   
-  const Map = (location) => (
-    <InnerMap
-        containerElement={(<div />)}
-        mapElement={(<div className="map" />)}
-        center={location}
-        location={location}
-        marker={{location}}
-    />
-  )
+const Map = ({location}) => (
+  <InnerMap
+      containerElement={(<div />)}
+      mapElement={(<div className="map" />)}
+      center={location}
+      location={location}
+      marker={{location}}
+  />
+)
 
-  Map.propTypes = {
-    location: PropTypes.objectOf(PropTypes.number).isRequired,
-  }
+Map.propTypes = {
+  location: PropTypes.objectOf(PropTypes.number).isRequired,
+}
 
-  
-  export default Map;
+
+export default Map;
